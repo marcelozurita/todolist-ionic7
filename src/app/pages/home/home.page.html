@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      To Do List
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list #taskSlidingList>
+    @for (item of taskList; track $index) {
+    <ion-item-sliding class="animate__animated animate__bounceInUp">
+      <ion-item>
+        @if(item.status == 'Pending') {
+        <ion-checkbox checked="false" (ionChange)="checkTask(item)" labelPlacement="end" justify="start">
+          <h3>{{ item.description }}</h3>
+        </ion-checkbox>
+        } @else {
+        <ion-checkbox checked="true" (ionChange)="uncheckTask(item)" labelPlacement="end" justify="start">
+          <h3><del>{{ item.description }}</del></h3>
+        </ion-checkbox>
+        }
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="danger" (click)="deleteTask(item)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    }
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button size="medium" id="addtask-alert">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-alert trigger="addtask-alert" header="Add a Task" [buttons]="addTaskButtons"
+    [inputs]="addTaskInputs"></ion-alert>
+
+</ion-content>
