@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonList } from '@ionic/angular';
 import { TaskService } from 'src/app/services/task.service';
+import { BatteryInfo, Device, DeviceInfo } from '@capacitor/device'
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,27 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class HomePage {
   @ViewChild('taskSlidingList') taskSlidingList?: IonList;
+  public info?: DeviceInfo;
+  public batteryInfo?: BatteryInfo;
+
+  ngOnInit() {
+    this.logDeviceInfo();
+    this.logBatteryInfo();
+  }
+
+  logDeviceInfo = async () => {
+    this.info = await Device.getInfo();
+
+    console.log(this.info);
+  };
+
+  logBatteryInfo = async () => {
+    this.batteryInfo = await Device.getBatteryInfo();
+
+    console.log(this.batteryInfo);
+  };
+
+
 
   addTaskButtons = [
     {
